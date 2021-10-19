@@ -4,6 +4,7 @@ using appTeste.model;
 using appTeste.TipoOut;
 using appTeste.Structs;
 using appTeste.Enum;
+using System.Collections;
 
 namespace appTeste
 {
@@ -67,6 +68,113 @@ namespace appTeste
                 Console.WriteLine("Outra cor");
             }
 
+
+            /*
+             * app de Pessoa
+             */
+            AppPessoas();
+          
+
+
+         static void AppPessoas()
+        {
+                string opcaoEscolhida = "";
+                ArrayList pessoas = new ArrayList();
+                do
+                {
+                    Console.WriteLine("\n== Menu ==");
+                    Console.WriteLine("1 - Cadastrar");
+                    Console.WriteLine("2 - Listar");
+                    Console.WriteLine("3 - Remover");
+                    Console.WriteLine("4 - Calcular a média das idades");
+                    Console.WriteLine("X - Sair");
+                    Console.WriteLine("Digite a opção desejada:");
+                    opcaoEscolhida = Console.ReadLine();
+
+                    switch (opcaoEscolhida)
+                    {
+                        case "1":
+                            Cadastrar(pessoas);
+                            break;
+                        case "2":
+                            Listar(pessoas);
+                            break;
+                        case "3":
+                            Remover(pessoas);
+                            break;
+                        case "4":
+                            CalcularMedia(pessoas);
+                            break;
+                        case "X": break;
+
+                        default:
+                            Console.WriteLine("Opção inválida!");
+                            break;
+                    }
+
+                } while (opcaoEscolhida.ToUpper() != "X");
+            }
+        }
+
+        private static void Cadastrar(ArrayList pessoas)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Digite o nome:");
+            string nome = Console.ReadLine();
+            Console.WriteLine("Digite o ano de nascimento:");
+            string ano = Console.ReadLine();
+
+            Pessoa pessoa = new Pessoa(nome, Int16.Parse(ano));
+            pessoas.Add(pessoa);
+
+            Console.WriteLine($"\n { nome } incluído com sucesso");
+        }
+
+        private static void Listar(ArrayList pessoas)
+        {
+            Console.WriteLine();
+            Console.WriteLine("== lista de pessoas ==");
+            foreach(Pessoa pessoa in pessoas)
+            {
+                Console.WriteLine($"Nome: { pessoa.Nome }");
+                Console.WriteLine($"Ano de nascimento: { pessoa.AnoNascimento}");
+                Console.WriteLine($"Idade: { pessoa.ObterIdade() }");
+                Console.WriteLine();
+            }
+        }
+
+        private static void Remover(ArrayList pessoas)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Digite o nome da pessoa para excluir:");
+            string nomePesquisa = Console.ReadLine();
+            Pessoa pessoaEncontrada = null;
+
+            foreach(Pessoa pessoa in pessoas)
+            {
+                if (pessoa.Nome.Equals(nomePesquisa))
+                {
+                    pessoaEncontrada = pessoa;
+                    break;
+                }
+            }
+
+            if (pessoaEncontrada != null)
+            {
+                pessoas.Remove(pessoaEncontrada);
+            }
+        }
+        private static void CalcularMedia(ArrayList pessoas)
+        {
+            decimal total = 0;
+
+            foreach(Pessoa pessoa in pessoas)
+            {
+                total += pessoa.ObterIdade();
+            }
+
+            decimal media = total / pessoas.Count;
+            Console.WriteLine($"A média de idade das pessoas é { media }");
         }
     }
 }

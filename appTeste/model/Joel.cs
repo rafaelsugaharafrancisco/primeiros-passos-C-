@@ -7,8 +7,8 @@ namespace appTeste.model
     {
         public Joel(string nome, int anoNascimento) : base(nome, anoNascimento)
         {
-            this.nome = nome;
-            this.anoNascimento = anoNascimento;
+            this._nome = nome;
+            this._anoNascimento = anoNascimento;
         }
     }
 }
